@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, Input, Modal } from 'antd';
+import { Table, Input, Modal, Row } from 'antd';
 import { userColumns } from "../columns/userColumns";
 import { fetchUsers } from "../redux/user";
 import { fetchPosts } from "../redux/post";
@@ -83,19 +83,21 @@ export default () => {
           top: "0",
           left: "0",
           width: "200px",
-          marginTop: "2vh"
+          margin: "2vh"
         }}
       />
-      <br /> <br />
       <Table
         rowKey="name"
         dataSource={filteredData}
         columns={userColumns}
         loading={tableState.loading}
         pagination={false}
-        onRow={(record, rowIndex) => {
+        style={{
+          margin: "2vh"
+        }}
+        onRow={(record) => {
           return {
-            onClick: event => {
+            onClick: () => {
               setPostState({
                 ...postState,
                 loading: true
@@ -106,8 +108,14 @@ export default () => {
           };
         }}
       />
-
-      <Modal title="Posts" width={1000} centered visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title="Posts"
+        width={1000}
+        centered
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        >
         <PostsTable data={postState.posts} loading={postState.loading} />
       </Modal>
     </>

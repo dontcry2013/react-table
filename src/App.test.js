@@ -1,10 +1,24 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
 import App from './App';
+import Enzyme, { mount, shallow } from 'enzyme';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './redux/rootReducer';
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import TableContainer from './components/TableContainer';
 
 describe('<App />', () => {
   it('Renders without crashing', () => {
     shallow(<App />);
   });
+});
+
+describe('<TableContainer /> unit test', () => {
+  const mockStore = createStore(rootReducer, applyMiddleware(thunk));
+  const getWrapper = () => mount(
+    <Provider store={mockStore}>
+      <TableContainer />
+    </Provider>
+  );
 });
