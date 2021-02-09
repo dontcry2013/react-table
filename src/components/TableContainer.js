@@ -5,6 +5,7 @@ import { userColumns } from "../columns/userColumns";
 import { fetchUsers } from "../redux/user";
 import { fetchPosts } from "../redux/post";
 import PostsTable from '../components/PostsTable';
+import { URL_PRO } from '../Constants';
 
 const { Search } = Input;
 
@@ -103,7 +104,7 @@ export default () => {
                 loading: true
               });
               setIsModalVisible(true);
-              dispatch(fetchPosts(record.id));
+              dispatch(fetchPosts(URL_PRO, record.id));
             },
           };
         }}

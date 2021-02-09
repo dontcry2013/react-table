@@ -1,12 +1,11 @@
 import React from 'react';
-import App from './App';
+import App from '../App';
 import Enzyme, { mount, shallow } from 'enzyme';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from './redux/rootReducer';
-import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from '../redux/rootReducer';
 import thunk from "redux-thunk";
-import TableContainer from './components/TableContainer';
+import TableContainer from '../components/TableContainer';
 
 describe('<App />', () => {
   it('Renders without crashing', () => {
@@ -20,5 +19,6 @@ describe('<TableContainer /> unit test', () => {
     <Provider store={mockStore}>
       <TableContainer />
     </Provider>
+    
   );
 });
