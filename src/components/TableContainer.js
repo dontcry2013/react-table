@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, Input, Modal, Row } from 'antd';
+import { Table, Input, Modal } from 'antd';
 import { userColumns } from "../columns/userColumns";
 import { fetchUsers } from "../redux/user";
 import { fetchPosts } from "../redux/post";
-import PostsTable from '../components/PostsTable';
+import PostsTable from './PostsTable';
 import { URL_PRO } from '../Constants';
 
 const { Search } = Input;
@@ -22,17 +22,22 @@ export default () => {
   useEffect(() => {
     dispatch(fetchUsers(URL_PRO));
   }, []);
-  
+
   useEffect(() => {
     setPostState(postSelected);
   }, [postSelected]);
 
   useEffect(() => {
     const crawl = (user, allValues) => {
-      if (!allValues) allValues = [];
-      for (var key in user) {
-        if (typeof user[key] === "object") crawl(user[key], allValues);
-        else allValues.push(user[key] + " ");
+      if (!allValues) {
+        allValues = [];
+      }
+      for (const key in user) {
+        if (typeof user[key] === "object") {
+          crawl(user[key], allValues);
+        } else {
+          allValues.push(`${user[key]} `);
+        }
       }
       return allValues;
     };
@@ -50,8 +55,9 @@ export default () => {
   useEffect(() => {
     if (searchVal) {
       const reqData = searchIndex.map((user, index) => {
-        if (user.allValues.toLowerCase().indexOf(searchVal.toLowerCase()) >= 0)
+        if (user.allValues.toLowerCase().indexOf(searchVal.toLowerCase()) >= 0) {
           return tableState.users[index];
+        }
         return null;
       });
       setFilteredData(

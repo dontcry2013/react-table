@@ -60,7 +60,7 @@ describe("User Reducer", () => {
   test("should return default state when state is undefined", () => {
     expect(userReducer(undefined, { type: "DUMMY_ACTION" })).toEqual(DEFAULT_STATE);
   })
-  
+
   test("should return expected state for FETCH_USERS_REQUEST action type", () => {
     const action = {
       type: userTypes.FETCH_USERS_REQUEST,

@@ -6,7 +6,6 @@ import thunk from "redux-thunk";
 import rootReducer from '../../redux/rootReducer';
 import TableContainer from '../../components/TableContainer';
 import { userColumns } from '../../columns/userColumns';
-import waitUntil from 'async-wait-until';
 
 let wrapper;
 const titles = userColumns.map(val => val.title)
@@ -26,7 +25,7 @@ describe('<TableContainer /> unit test', () => {
     expect(wrapper.find('Input').length).toBe(1);
     expect(wrapper.find('Table').length).toBe(2);
   })
-  
+
   test('Table titles should equal with configuration file', () => {
     expect(wrapper.find('Table').at(0).find('th').at(0).text()).toBe(titles[0]);
     expect(wrapper.find('Table').at(0).find('th').at(1).text()).toBe(titles[1]);

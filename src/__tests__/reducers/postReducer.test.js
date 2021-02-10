@@ -26,7 +26,7 @@ describe("Post Reducer", () => {
   test("should return default state when state is undefined", () => {
     expect(postReducer(undefined, { type: "DUMMY_ACTION" })).toEqual(DEFAULT_STATE);
   })
-  
+
   test("should return expected state for FETCH_POST_REQUEST action type", () => {
     const action = {
       type: postTypes.FETCH_POST_REQUEST,

@@ -13,7 +13,7 @@ export const useFetch = (url) => {
 
   useEffect(() => {
     console.log("isCurrent", isCurrent);
-    setState((state) => ({ data: state.data, loading: true }));
+    setState((preState) => ({ data: preState.data, loading: true }));
     fetch(url)
       .then((x) => x.json())
       .then((y) => {

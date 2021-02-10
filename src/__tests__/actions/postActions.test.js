@@ -1,8 +1,8 @@
-import * as actions from '../../redux/post/postActions';
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
+import * as actions from '../../redux/post/postActions';
 import {
   FETCH_POST_REQUEST,
   FETCH_POST_SUCCESS,
@@ -12,7 +12,7 @@ import { URL_TEST } from '../../Constants';
 
 const mock = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
-const DEFAULT_STATE =  {
+const DEFAULT_STATE = {
   loading: false,
   posts: [],
   error: ""
@@ -20,7 +20,7 @@ const DEFAULT_STATE =  {
 const store = mockStore(DEFAULT_STATE);
 
 describe("Post Action Creators", () => {
-  test("fetch posts request",() => {
+  test("fetch posts request", () => {
     const expectedAction = {
       type: FETCH_POST_REQUEST,
     }

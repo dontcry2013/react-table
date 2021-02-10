@@ -1,56 +1,31 @@
-// .eslintrc
 {
   "extends": [
     "airbnb-base",
     "react-app"
   ],
+  "parser": "babel-eslint",
   "rules": {
-    "object-curly-spacing": [
-      "warn",
-      "always"
-    ],
-    "no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "^_"
-      }
-    ],
-    "max-len": [
-      "warn",
-      {
-        "code": 120,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreComments": true
-      }
-    ],
-    "no-plusplus": [
-      "error",
-      {
-        "allowForLoopAfterthoughts": true
-      }
-    ],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
-      }
-    ]
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
-    }
+    "spaced-comment": [0],
+    "no-unused-vars": [0],
+    "no-empty": [0],
+    "react/wrap-multilines": [0],
+    "react/no-multi-comp": [0],
+    "no-constant-condition": [0],
+    "react/jsx-no-bind": [0],
+    "react/prop-types": [0],
+    "arrow-body-style": [0],
+    "react/prefer-stateless-function": [0],
+    "semi": [0],
+    "quotes": [0],
+    "quote-props": [0],
+    "comma-dangle": [0],
+    "newline-per": [0],
+    "linebreak-style": [0],
+    "newline-per-chained-call": [0],
+    "import/no-extraneous-dependencies": [0],
+    "import/prefer-default-export": [1],
+    "arrow-parens": [0],
+    "no-param-reassign": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

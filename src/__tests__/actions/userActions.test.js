@@ -1,4 +1,3 @@
-import * as actions from '../../redux/user/userActions';
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import configureMockStore from "redux-mock-store";
@@ -8,6 +7,7 @@ import {
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
 } from '../../redux/user/userTypes';
+import * as actions from '../../redux/user/userActions';
 import { URL_TEST } from '../../Constants';
 
 const mockedResponse = [
@@ -68,7 +68,7 @@ const DEFAULT_STATE = {
 const store = mockStore(DEFAULT_STATE);
 
 describe("User Action Creators", () => {
-  test("fetch users request",() => {
+  test("fetch users request", () => {
     const expectedAction = {
       type: FETCH_USERS_REQUEST,
     }
