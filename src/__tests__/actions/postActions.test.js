@@ -19,7 +19,7 @@ const DEFAULT_STATE =  {
 }
 const store = mockStore(DEFAULT_STATE);
 
-describe("Action Creators", () => {
+describe("Post Action Creators", () => {
   test("fetch posts request",() => {
     const expectedAction = {
       type: FETCH_POST_REQUEST,
@@ -28,11 +28,11 @@ describe("Action Creators", () => {
   })
 
   test("fetch posts success", () => {
-      const expectedAction = {
-          type: FETCH_POST_SUCCESS,
-          payload: [],
-      }
-      expect(actions.fetchPostsSuccess([])).toEqual(expectedAction);
+    const expectedAction = {
+      type: FETCH_POST_SUCCESS,
+      payload: [],
+    }
+    expect(actions.fetchPostsSuccess([])).toEqual(expectedAction);
   })
 
   test("fetch posts failure", () => {
@@ -44,28 +44,28 @@ describe("Action Creators", () => {
   })
 
   test("fetchPosts action creator return expected action", () => {
-      const mockedResponse = [
-        {
-          "userId": 1,
-          "id": 1,
-          "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-          "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-        },
-        {
-          "userId": 1,
-          "id": 2,
-          "title": "qui est esse",
-          "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-        },
-      ]
-      mock
-        .onGet("/posts?userId=1")
-        .reply(200, mockedResponse)
-      store.dispatch(actions.fetchPosts(URL_TEST, 1))
-        .then(() => {
-          const mActions = store.getActions();
-          expect(mActions[0]).toEqual({ type: 'FETCH_POST_REQUEST' });
-          expect(mActions[1].payload).toEqual(mockedResponse);
-        })
+    const mockedResponse = [
+      {
+        "userId": 1,
+        "id": 1,
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+      },
+      {
+        "userId": 1,
+        "id": 2,
+        "title": "qui est esse",
+        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+      },
+    ]
+    mock
+      .onGet("/posts?userId=1")
+      .reply(200, mockedResponse)
+    store.dispatch(actions.fetchPosts(URL_TEST, 1))
+      .then(() => {
+        const mActions = store.getActions();
+        expect(mActions[0]).toEqual({ type: 'FETCH_POST_REQUEST' });
+        expect(mActions[1].payload).toEqual(mockedResponse);
+      })
   })
 })

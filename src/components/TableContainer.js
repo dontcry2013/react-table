@@ -20,7 +20,7 @@ export default () => {
   const [postState, setPostState] = useState({ loading: false, posts: [] });
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchUsers(URL_PRO));
   }, []);
   
   useEffect(() => {
@@ -74,7 +74,7 @@ export default () => {
   };
 
   return (
-    <>
+    <div>
       <Search
         onChange={(e) => setSearchVal(e.target.value)}
         placeholder="Search"
@@ -112,13 +112,13 @@ export default () => {
       <Modal
         title="Posts"
         width={1000}
-        centered
+        style={{ top: 20 }}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         >
         <PostsTable data={postState.posts} loading={postState.loading} />
       </Modal>
-    </>
+    </div>
   )
 }

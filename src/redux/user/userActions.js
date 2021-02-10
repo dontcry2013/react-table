@@ -5,11 +5,11 @@ import {
   FETCH_USERS_FAILURE
 } from "./userTypes";
 
-export const fetchUsers = () => {
+export const fetchUsers = (uri) => {
   return (dispatch) => {
     dispatch(fetchUsersRequest());
-    axios
-      .get("https://jsonplaceholder.typicode.com/users")
+    return axios
+      .get(`${uri}/users`)
       .then((response) => {
         // response.data is the users
         const users = response.data;
