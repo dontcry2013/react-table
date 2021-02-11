@@ -7,67 +7,64 @@ import { fetchPosts } from "../redux/post";
 import PostsTable from './PostsTable';
 import { URL_PRO } from '../Constants';
 
+const crawl = (user, allValues) => {
+  if (!allValues) {
+    allValues = [];
+  }
+  for (const key in user) {
+    if (typeof user[key] === "object") {
+      crawl(user[key], allValues);
+    } else {
+      allValues.push(`${user[key]} `);
+    }
+  }
+  return allValues;
+};
+const getUsersSearchIndex = (users) => {
+  return users.map(user => {
+    const allValues = crawl(user);
+    return { allValues: allValues.toString() };
+  });
+}
 const { Search } = Input;
-
 export default () => {
   const dispatch = useDispatch();
   const tableState = useSelector((state) => state.user);
-  const postSelected = useSelector((state) => state.post);
   const [searchVal, setSearchVal] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
   const [searchIndex, setSearchIndex] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [postState, setPostState] = useState({ loading: false, posts: [] });
 
   useEffect(() => {
     dispatch(fetchUsers(URL_PRO));
-  }, []);
+  }, [URL_PRO]);
 
   useEffect(() => {
-    setPostState(postSelected);
-  }, [postSelected]);
-
-  useEffect(() => {
-    const crawl = (user, allValues) => {
-      if (!allValues) {
-        allValues = [];
-      }
-      for (const key in user) {
-        if (typeof user[key] === "object") {
-          crawl(user[key], allValues);
-        } else {
-          allValues.push(`${user[key]} `);
-        }
-      }
-      return allValues;
-    };
-    const handleData = () => {
+    if (tableState && tableState.users) {
       setFilteredData(tableState.users);
-      const searchInd = tableState.users.map(user => {
-        const allValues = crawl(user);
-        return { allValues: allValues.toString() };
-      });
+      const searchInd = getUsersSearchIndex(tableState.users)
       setSearchIndex(searchInd);
-    };
-    handleData();
+    }
   }, [tableState]);
 
   useEffect(() => {
-    if (searchVal) {
-      const reqData = searchIndex.map((user, index) => {
-        if (user.allValues.toLowerCase().indexOf(searchVal.toLowerCase()) >= 0) {
-          return tableState.users[index];
-        }
-        return null;
-      });
-      setFilteredData(
-        reqData.filter(user => {
-          if (user) return true;
-          return false;
-        })
-      );
-    } else {
-      setFilteredData(tableState.users);
+    if (tableState && tableState.users) {
+      if (searchVal) {
+        // firstly, we get an array with target object and replace unwanted with null
+        const reqData = searchIndex.map((user, index) => {
+          return user.allValues.toLowerCase().indexOf(searchVal.toLowerCase()) >= 0
+            ? tableState.users[index]
+            : null;
+        });
+        // secondly, remove null from array and set to table
+        setFilteredData(
+          reqData.filter(user => {
+            return !!user;
+          })
+        );
+      } else {
+        setFilteredData(tableState.users);
+      }
     }
   }, [searchVal, tableState]);
 
@@ -105,10 +102,6 @@ export default () => {
         onRow={(record) => {
           return {
             onClick: () => {
-              setPostState({
-                ...postState,
-                loading: true
-              });
               setIsModalVisible(true);
               dispatch(fetchPosts(URL_PRO, record.id));
             },
@@ -123,7 +116,7 @@ export default () => {
         onOk={handleOk}
         onCancel={handleCancel}
         >
-        <PostsTable data={postState.posts} loading={postState.loading} />
+        <PostsTable />
       </Modal>
     </div>
   )
