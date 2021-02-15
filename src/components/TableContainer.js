@@ -7,6 +7,18 @@ import { fetchPosts } from "../redux/post";
 import PostsTable from './PostsTable';
 import { URL_PRO } from '../Constants';
 
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
 const crawl = (user, allValues) => {
   if (!allValues) {
     allValues = [];
@@ -48,6 +60,7 @@ export default () => {
   }, [tableState]);
 
   useEffect(() => {
+    console.log(11, searchVal);
     if (tableState && tableState.users) {
       if (searchVal) {
         // firstly, we get an array with target object and replace unwanted with null
@@ -76,10 +89,16 @@ export default () => {
     setIsModalVisible(false);
   };
 
+  const debounceSearch = debounce(value => {
+    setSearchVal(value);
+  }, 1000);
+
   return (
     <div>
       <Search
-        onChange={(e) => setSearchVal(e.target.value)}
+        onChange={(e) => {
+          debounceSearch(e.target.value)
+        }}
         placeholder="Search"
         enterButton
         style={{
