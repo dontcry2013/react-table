@@ -13,7 +13,9 @@ export const fetchUsers = (uri) => {
       .then((response) => {
         // response.data is the users
         const users = response.data;
-        dispatch(fetchUsersSuccess(users));
+        setTimeout(() => {
+          dispatch(fetchUsersSuccess(users));
+        }, 3000);
       })
       .catch((error) => {
         // error.message is the error message

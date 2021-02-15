@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table, Input, Modal } from 'antd';
+import {
+  Table,
+  Input,
+  Modal,
+  Space,
+  Button,
+} from 'antd';
 import { userColumns } from "../columns/userColumns";
 import { fetchUsers } from "../redux/user";
 import { fetchPosts } from "../redux/post";
 import PostsTable from './PostsTable';
 import { URL_PRO } from '../Constants';
+
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
 const crawl = (user, allValues) => {
   if (!allValues) {
@@ -76,20 +94,34 @@ export default () => {
     setIsModalVisible(false);
   };
 
+  const debounceSearch = debounce(value => {
+    setSearchVal(value);
+  }, 1000);
+
   return (
     <div>
-      <Search
-        onChange={(e) => setSearchVal(e.target.value)}
-        placeholder="Search"
-        enterButton
-        style={{
-          position: "sticky",
-          top: "0",
-          left: "0",
-          width: "200px",
-          margin: "2vh"
-        }}
-      />
+      <Space style={{
+        position: "sticky",
+        top: "0",
+        left: "0",
+        margin: "2vh"
+      }}>
+        <Search
+          onChange={(e) => {
+            debounceSearch(e.target.value)
+          }}
+          placeholder="Search"
+          enterButton
+          style={{
+            width: "200px",
+          }}
+        />
+        <Button onClick={() => {
+          dispatch(fetchUsers(URL_PRO));
+        }}>
+          Refresh
+        </Button>
+      </Space>
       <Table
         rowKey="name"
         dataSource={filteredData}
