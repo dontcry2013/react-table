@@ -2,12 +2,18 @@ export const userColumns = [
   {
     title: "ID",
     dataIndex: "id",
-    key: "id"
+    key: "id",
+    sorter: (a, b) => {
+      return a.id - b.id;
+    },
   },
   {
     title: "Name",
     dataIndex: "name",
-    key: "name"
+    key: "name",
+    sorter: (a, b) => {
+      return a.name.localeCompare(b.name);
+    },
   },
   {
     title: "Email",
